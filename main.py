@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import csv
 import requests
 Url = "https://www.gismeteo.ru/diary/4368/2023/9/"
 headers = {
@@ -7,13 +8,17 @@ headers = {
 }
 req = requests.get(Url,headers = headers)
 src = req.text
-with open("index.html","w")as file:
-    file.write(src)
-print(src)
-# with open("index.hutml") as file:
-#     src = file.read()
-# soup = BeautifulSoup(src,"lxml")
-# all_days = soup.find_all(class_ ="current-time")
-# for item in all_days:
-#     item_text = item.text
-#     print(item_text)
+with open("index.html")as file:
+    src = file.read()
+soup = BeautifulSoup(src,"lxml")
+table = soup.find("table").text
+with open('dataset.csv', 'w', newline='') as csvfile:
+    for item in table:
+        file_writer = csv.writer(csvfile, delimiter=",", lineterminator="\r")
+        file_writer.writerow([(soup.find("table").text)])
+# for item in table:
+#         file.write(soup.find("table").find(class_ = "td.first").text)
+# with open(" dataset.csv","w")as file:
+#     file.write()
+
+# for item in table:
