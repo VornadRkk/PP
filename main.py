@@ -14,11 +14,9 @@ soup = BeautifulSoup(src,"lxml")
 table = soup.find("table").text
 with open('dataset.csv', 'w', newline='') as csvfile:
     for item in table:
+        tabledata = soup.find("table").find("tbody").find("tr").find("td", class_="first").text
+        tabletemp = soup.find("table").find("tbody").find("tr").find("td",class_ ="first_in_group positive").text
+        tablepresure = soup.find("table").find("td",class_ ="first_in_group positive").find_next().text
+        table_wind = soup.find("table").find("span").text
         file_writer = csv.writer(csvfile, delimiter=",", lineterminator="\r")
-        file_writer.writerow([(soup.find("table").text)])
-# for item in table:
-#         file.write(soup.find("table").find(class_ = "td.first").text)
-# with open(" dataset.csv","w")as file:
-#     file.write()
-
-# for item in table:
+        file_writer.writerow([tabledata,tabletemp,tablepresure,table_wind])
