@@ -1,8 +1,10 @@
+import time
+
 from bs4 import BeautifulSoup
 import csv
 import re
 import requests
-for year in range(2022,2024):
+for year in range(1997,2024):
     for moths in range(1,13):
         Url = "https://www.gismeteo.ru/diary/4618/" + str(year) + "/" + str(moths) + "/"
         headers = {
@@ -11,8 +13,11 @@ for year in range(2022,2024):
         }
         req = requests.get(Url,headers = headers)
         src = req.text
-        with open("index.html", "w") as file:
-            file.write(src)
+        try:
+            with open("index.html", "w") as file:
+                file.write(src)
+        except Exception:
+            continue
         # with open("index.html")as file:
         #     src = file.read()
         soup = BeautifulSoup(src,"lxml")
@@ -32,8 +37,8 @@ for year in range(2022,2024):
             presure_evening = data_td[7].text
             data_table.append(
                 {
-                    "day": day +"." + str(moths)+"."+str(year),
-                    "temp_morinng": temp_morning,
+                    "day": str(year)+"-" +str(moths) +"-"+day,
+                    "temp_morning": temp_morning,
                     "presure_morning": presure_morning,
                     "wind_morning": wind_morning,
                     "temp_evening": temp_evening,
@@ -43,7 +48,11 @@ for year in range(2022,2024):
                 }
             )
 
-        with open('dataset.csv', 'a', newline='') as csvfile:
+        with open('dataset-number.csv', 'a', newline='') as csvfile:
             for item in data_table:
-                writer = csv.writer(csvfile)
-                writer.writerow([item])
+                writer = csv.writer(csvfile,delimiter=",")
+                writer.writerow([item["day"]])
+        with open('dataset-data.csv', 'a', newline='') as csvfile:
+            for item in data_table:
+                writer = csv.writer(csvfile,delimiter=",")
+                writer.writerow([item["temp_morning"],item["presure_morning"],item["wind_morning"],item["temp_evening"],item["presure_evening"],item["wind_evening"]])
