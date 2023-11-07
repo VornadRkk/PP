@@ -44,7 +44,7 @@ for year in range(2020,2024):
              presure_evening = data_td[7].text
              data_table.append(
                  {
-                     "day": str(year)+"-" +str(moths) +"-"+day,
+                     "day": str(year)+"-" +str(moun) +"-"+day,
                      "temp_morning": temp_morning,
                      "presure_morning": presure_morning,
                      "wind_morning": wind_morning,
@@ -67,8 +67,8 @@ with open('dataset.csv', newline='') as f:
         file_writer.writerow([row['data']])
         file_writer = csv.writer(open('dataset-data.csv', 'a', newline=''), lineterminator="\r")
         file_writer.writerow([row["temp_morning"],row["presure_morning"],row["wind_morning"],row["temp_evening"],row["presure_evening"],row["wind_evening"]])
-for year in range(2020, 2024):
 
+for year in range(2020, 2024):
     output_file = f'dataset-{year}0101_{year}1231.csv'
 
 
@@ -89,6 +89,26 @@ for year in range(2020, 2024):
                     writer.writerow([row['data'], row["temp_morning"], row["presure_morning"], row["wind_morning"],row["temp_evening"], row["presure_evening"], row["wind_evening"]])
 
 
+for year in range(2020, 2024):
+    input_file = f'dataset-{year}0101_{year}1231.csv'
+
+    with open(input_file, 'r', newline='') as file:
+        fieldnames = ['data', 'temp_morning', 'presure_morning', 'wind_morning', 'temp_evening', 'presure_evening',
+                      'wind_evening']
+        reader = csv.DictReader(file, fieldnames=fieldnames)
+        first_row = next(reader)
+        year = first_row['data'][:4]
+        first_date = first_row['data'][5:10]
+
+        last_date = None
+        for row in reader:
+            last_date = row['data'][5:10]
+
+        if last_date:
+            output_file = f'dataset-{year}{first_date}_{year}{last_date}.csv'
+            file.close()
+            os.rename(input_file, output_file)
+
 with open('dataset.csv', newline='') as f:
     fieldnames = ['data', 'temp_morning', 'presure_morning', 'wind_morning', 'temp_evening', 'presure_evening',
                   'wind_evening']
@@ -107,7 +127,6 @@ with open('dataset.csv', newline='') as f:
 
         if current_week_start is None:
             current_week_start = date - datetime.timedelta(days=day_of_week)
-
 
         if day_of_week == 6:
 

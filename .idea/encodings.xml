@@ -2,9 +2,20 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/ dataset.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/dataset-20200101_20201231.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/dataset-20210101_20211231.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/dataset-20220101_20221231.csv" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/dataset-data.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/dataset-week-1.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/dataset-week-399.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/dataset-week-400.csv" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/dataset.csv" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/index.html" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/index.hutml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/week-621/dataset-week-621.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/week/dataset-week-1.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/week/dataset-week-10.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/week/dataset-week-209.csv" charset="windows-1251" />
+    <file url="PROJECT" charset="windows-1251" />
   </component>
 </project>
