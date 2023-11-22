@@ -18,13 +18,4 @@ def get_data_for_date(csv_filename, target_date):
                     "wind_evening": row['wind_evening']
                 }
     return None
-csv_filename = 'dataset.csv'
-target_date = '2023-10-27'
-data = get_data_for_date(csv_filename, target_date)
-
-if data:
-    print("database for data", target_date, "find:")
-    print(data)
-else:
-    print("database for data", target_date, "don't find.")
 
