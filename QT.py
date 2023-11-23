@@ -1,7 +1,7 @@
 
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import  QApplication,QMainWindow,QInputDialog,QFileDialog,QTextEdit,QLineEdit
+from PyQt5.QtWidgets import  QApplication,QMainWindow,QInputDialog,QFileDialog,QTextEdit,QLabel
 from PyQt5.QtGui import QFont
 import week
 import year
@@ -12,10 +12,13 @@ import iterator_next
 class Window(QMainWindow):
     def __init__(self):
         super(Window,self).__init__()
+        self.iter = None
+        self.folderpath = None
+        self.file_name = None
         self.selected_csv_file = None
         self.text_edit = QTextEdit(self)
         self.setWindowTitle("Data")
-        self.setGeometry(300,250,350,200)
+        self.setGeometry(300, 250, 600, 400)
         button_height = 40
         button_width = 200
         button_margin = 10
@@ -31,7 +34,10 @@ class Window(QMainWindow):
         self.create_function_data = QtWidgets.QPushButton("function_data", self)
         self.create_function_data.setGeometry(self.create_data_week.x(), self.create_x_and_y.y() + button_height + button_margin, button_width, button_height)
         self.create_function_data.clicked.connect(self.function_data_button_clicked)
-
+        self.create_next = QtWidgets.QPushButton("Next_date",self)
+        self.create_next.setGeometry(self.create_data_week.x(), self.create_function_data.y()+ button_height + button_margin, button_width, button_height)
+        self.create_next.clicked.connect(self.iterator_next_buttom_clicked)
+        self.text_edit.setFixedSize(self.width() - 2 * button_margin,self.height() - 3 * button_margin - 4 * button_height)
 
     def week_button_clicked(self):
         folderpath = QFileDialog.getExistingDirectory(self, 'Select Folder')
@@ -69,6 +75,24 @@ class Window(QMainWindow):
         if ok:
             self.input_data = text
             return text
+    def iterator_next_buttom_clicked(self):
+        if not self.folderpath or not self.file_name:
+            self.select_folder_and_file()
+        else:
+            next_data = self.iter.__next__()
+            self.text_edit.append(f"Next data:")
+            self.text_edit.append(str(next_data))
+
+    def select_folder_and_file(self):
+        if not self.folderpath:
+            self.folderpath = QFileDialog.getExistingDirectory(self, 'Select Folder')
+
+        if not self.file_name:
+            self.file_name, _ = QFileDialog.getOpenFileName(self, 'Choose file', self.folderpath, 'CSV File (*.csv)')
+        self.iter = iterator_next.DataIterator(self.file_name)
+        next_data = self.iter.__next__()
+        self.text_edit.append(f"Next data:")
+        self.text_edit.append(str(next_data))
 
 def application():
     app = QApplication(sys.argv)
